@@ -1,133 +1,15 @@
-// Einfache Seite, die JD+CV erfasst, an das Backend /generate sendet
-// und das generierte Anschreiben + ATS-Score anzeigt.
-
-import { useState } from "react";
-
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://127.0.0.1:8000";
-
-export default function Home() {
-  // Form-Zustand
-  const [jdTitle, setJdTitle] = useState("Senior Data Analyst");
-  const [jdCompany, setJdCompany] = useState("Beispiel GmbH");
-  const [jdText, setJdText] = useState("Wir suchen SQL, DBT, KPI-Design, Stakeholder-Management im E-Commerce …");
-  const [cvName, setCvName] = useState("Max Mustermann");
-  const [cvText, setCvText] = useState("- SQL-DWH optimiert, Abfragezeit −38 %\n- DBT-Pipelines für 120+ Modelle, Fehlerrate −22 %\n- KPI-Deck für C-Level, NPS +6");
-  const [tone, setTone] = useState("professionell");
-
-  // Ergebniszustand
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [letter, setLetter] = useState("");
-  const [score, setScore] = useState(null);
-  const [diag, setDiag] = useState(null);
-
-  // Klick-Handler: sendet Daten an Backend → /generate
-  async function handleGenerate() {
-    setLoading(true);
-    setError("");
-    setLetter("");
-    setScore(null);
-    setDiag(null);
-
-    try {
-      const res = await fetch(`${API_BASE}/generate`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          jd: { title: jdTitle, company: jdCompany, raw_text: jdText },
-          cv: { name: cvName, raw_text: cvText },
-          tone,
-          max_words: 220
-        })
-      });
-
-      if (!res.ok) {
-        // Falls Backend-Fehler → kurze Meldung anzeigen
-        const txt = await res.text();
-        throw new Error(`Backend-Fehler (${res.status}): ${txt}`);
-      }
-
-      const data = await res.json();
-      // Ergebnis setzen → UI aktualisiert sich automatisch
-      setLetter(data.cover_letter);
-      setScore(data.score);
-      setDiag(data.diagnostics);
-    } catch (e) {
-      setError(e.message);
-    } finally {
-      setLoading(false);
-    }
+{
+  "name": "ats-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "14.2.4",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
   }
-
-  return (
-    <main style={{ padding: 24, fontFamily: "system-ui, sans-serif" }}>
-      <h1 style={{ fontSize: 32, fontWeight: 800, background: "#dbead3", padding: 12, marginBottom: 12 }}>
-        Bewerbung ATS Generator
-      </h1>
-      <p style={{ marginBottom: 24 }}>Frontend läuft & spricht gleich mit dem Backend unter: {API_BASE}</p>
-
-      {/* Eingabe-Formular */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-        <section>
-          <h2 style={{ fontWeight: 700 }}>Stellenanzeige</h2>
-          <input value={jdTitle} onChange={e=>setJdTitle(e.target.value)} placeholder="Titel"
-                 style={{ width: "100%", padding: 8, marginBottom: 8 }} />
-          <input value={jdCompany} onChange={e=>setJdCompany(e.target.value)} placeholder="Firma (optional)"
-                 style={{ width: "100%", padding: 8, marginBottom: 8 }} />
-          <textarea value={jdText} onChange={e=>setJdText(e.target.value)} placeholder="Volltext der JD"
-                    rows={8} style={{ width: "100%", padding: 8 }} />
-        </section>
-
-        <section>
-          <h2 style={{ fontWeight: 700 }}>Lebenslauf</h2>
-          <input value={cvName} onChange={e=>setCvName(e.target.value)} placeholder="Dein Name"
-                 style={{ width: "100%", padding: 8, marginBottom: 8 }} />
-          <textarea value={cvText} onChange={e=>setCvText(e.target.value)} placeholder="Erfolge/Bullets"
-                    rows={9} style={{ width: "100%", padding: 8, marginBottom: 8 }} />
-          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            <label>Ton:</label>
-            <select value={tone} onChange={e=>setTone(e.target.value)} style={{ padding: 8 }}>
-              <option value="professionell">Professionell</option>
-              <option value="impact">Impact-getrieben</option>
-              <option value="team">Teamorientiert</option>
-            </select>
-            <button onClick={handleGenerate} disabled={loading}
-                    style={{ padding: "8px 12px", background: "black", color: "white", border: "none", cursor: "pointer" }}>
-              {loading ? "Erzeuge…" : "Anschreiben erzeugen"}
-            </button>
-          </div>
-        </section>
-      </div>
-
-      {/* Fehleranzeige */}
-      {error && (
-        <p style={{ color: "crimson", marginTop: 16 }}>
-          {error}
-        </p>
-      )}
-
-      {/* Ergebnisanzeige */}
-      {(letter || score !== null) && (
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginTop: 24 }}>
-          <section>
-            <h3 style={{ fontWeight: 700 }}>Entwurf</h3>
-            <textarea value={letter} onChange={e=>setLetter(e.target.value)} rows={16}
-                      style={{ width: "100%", padding: 8 }} />
-          </section>
-          <section>
-            <h3 style={{ fontWeight: 700 }}>ATS-Score & Diagnose</h3>
-            <div style={{ border: "1px solid #ddd", padding: 12 }}>
-              <p><strong>Score:</strong> {score !== null ? Math.round(score * 100) + "%" : "-"}</p>
-              <p style={{ fontSize: 14, color: "#555" }}>
-                {diag ? `Keyword Coverage: ${Math.round(diag.keyword_coverage * 100)}%` : ""}
-              </p>
-              <p style={{ fontSize: 14, color: "#555" }}>
-                {diag?.found_keywords?.length ? `Gefundene Keywords: ${diag.found_keywords.join(", ")}` : ""}
-              </p>
-            </div>
-          </section>
-        </div>
-      )}
-    </main>
-  );
 }
