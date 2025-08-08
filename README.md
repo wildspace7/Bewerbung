@@ -12,6 +12,8 @@ pip install -e .
 uvicorn app.main:app --reload
 
 ### Frontend
+
+```bash
 cd frontend
 npm i
 npm run dev
