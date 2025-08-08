@@ -1,4 +1,4 @@
 cd frontend
 npm i
 npm run dev
-
+#Danach ist die App erreichbar unter: Frontend: http://localhost:3000
