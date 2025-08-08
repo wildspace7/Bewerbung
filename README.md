@@ -10,3 +10,8 @@ cd backend
 python -m venv .venv && source .venv/bin/activate
 pip install -e .
 uvicorn app.main:app --reload
+
+### Frontend
+cd frontend
+npm i
+npm run dev
