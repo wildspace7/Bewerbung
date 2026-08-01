@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function EmptyTripsState() {
   return (
     <div className="flex flex-1 items-center justify-center px-4 py-10">
@@ -22,9 +24,12 @@ export function EmptyTripsState() {
           Kostenaufteilung mit deinen Mitreisenden an einem Ort.
         </p>
 
-        <button className="mt-6 inline-flex items-center gap-2 rounded-md bg-gradient-to-br from-coral to-coral-deep px-6 py-3.5 text-button text-white shadow-[0_12px_24px_-8px_rgba(224,106,62,0.55)]">
+        <Link
+          href="/trips/new"
+          className="mt-6 inline-flex items-center gap-2 rounded-md bg-gradient-to-br from-coral to-coral-deep px-6 py-3.5 text-button text-white shadow-[0_12px_24px_-8px_rgba(224,106,62,0.55)]"
+        >
           + Neuen Urlaub planen
-        </button>
+        </Link>
       </div>
     </div>
   );

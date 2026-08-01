@@ -301,6 +301,12 @@ Repos, da das Repo-Root ein anderes, unabhängiges Projekt enthält):
 4. Design-Tokens als Tailwind-`@theme` in `src/app/globals.css`
 5. Screen „Trip-Liste" (`src/app/trips/page.tsx`) mit leerem Zustand
    (`EmptyTripsState`) und Liste (`TripCard`)
+6. Screen „Trip erstellen" (`src/app/trips/new/page.tsx`) — Formular
+   (Reisename, Ziel, Start-/Enddatum), echter Supabase-Insert in `trips`,
+   verlinkt von den "+"-Buttons der Trip-Liste. Ohne echtes Supabase-Projekt
+   zeigt das Formular beim Absenden einen Fehlertext statt abzustürzen
+   (`src/lib/supabase.ts` nutzt Platzhalter-Fallbacks, damit der Next-Build
+   nicht an fehlenden Env-Variablen scheitert).
 
 Noch offen (nicht Teil dieser Session, bewusst nicht gebaut): Auth/Login,
-Onboarding, Trip erstellen, Trip-Dashboard und alle weiteren Sitemap-Screens.
+Onboarding, Trip-Dashboard und alle weiteren Sitemap-Screens.

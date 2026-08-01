@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AmbientBackground } from "@/components/AmbientBackground";
 import { EmptyTripsState } from "@/components/EmptyTripsState";
 import { TripCard } from "@/components/TripCard";
@@ -31,7 +32,10 @@ const mockTrips: TripListItem[] = [
 
 function AddTripButton() {
   return (
-    <button className="flex h-10 w-10 items-center justify-center rounded-sm border border-white/75 bg-white/42 shadow-[0_4px_14px_rgba(80,90,140,0.12)] backdrop-blur-[14px]">
+    <Link
+      href="/trips/new"
+      className="flex h-10 w-10 items-center justify-center rounded-sm border border-white/75 bg-white/42 shadow-[0_4px_14px_rgba(80,90,140,0.12)] backdrop-blur-[14px]"
+    >
       <svg
         viewBox="0 0 24 24"
         fill="none"
@@ -43,7 +47,7 @@ function AddTripButton() {
       >
         <path d="M12 5v14M5 12h14" />
       </svg>
-    </button>
+    </Link>
   );
 }
 
