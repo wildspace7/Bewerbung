@@ -4,7 +4,7 @@ import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AmbientBackground } from "@/components/AmbientBackground";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/client";
 
 function BackButton() {
   return (
@@ -56,21 +56,41 @@ export default function NewTripPage() {
     setError(null);
     setSubmitting(true);
 
-    const { error: insertError } = await supabase.from("trips").insert({
-      name,
-      destination: destination || null,
-      start_date: startDate || null,
-      end_date: endDate || null,
-    });
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-    setSubmitting(false);
+    const { data: trip, error: insertError } = await supabase
+      .from("trips")
+      .insert({
+        name,
+        destination: destination || null,
+        start_date: startDate || null,
+        end_date: endDate || null,
+        created_by: user?.id ?? null,
+      })
+      .select("id")
+      .single();
 
     if (insertError) {
+      setSubmitting(false);
       setError(insertError.message);
       return;
     }
 
-    router.push("/trips");
+    // Wer den Trip anlegt, ist automatisch Organisator.
+    if (user) {
+      await supabase.from("trip_participants").insert({
+        trip_id: trip.id,
+        profile_id: user.id,
+        role: "organizer",
+      });
+    }
+
+    setSubmitting(false);
+    router.push(`/trips/${trip.id}`);
+    router.refresh();
   }
 
   return (

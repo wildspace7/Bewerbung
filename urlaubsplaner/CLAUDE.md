@@ -149,7 +149,16 @@ diary_photos (
 Ausgabe direkt berechnet und gespeichert (nicht erst am Ende) — das ermöglicht
 laufende „Wer schuldet wem"-Anzeige statt Nachrechnen am Reiseende.
 
-> Umgesetzt als Migration: `supabase/migrations/0001_init.sql`
+> Umgesetzt als Migrationen:
+> `supabase/migrations/0001_init.sql` (Tabellen) und
+> `supabase/migrations/0002_rls.sql` (Row Level Security).
+>
+> **RLS-Grundregel:** Man sieht die Daten eines Trips genau dann, wenn man
+> Teilnehmer:in dieses Trips ist. Der Membership-Check läuft über die
+> `SECURITY DEFINER`-Funktion `is_trip_member(trip_id)` — direkt verschränkte
+> Policies zwischen `trips` und `trip_participants` würden sonst in eine
+> Endlosrekursion laufen. Neue trip-gebundene Tabellen bitte nach demselben
+> Muster absichern.
 
 ## Design-System — Light Glassmorphism v1.0
 
@@ -308,5 +317,19 @@ Repos, da das Repo-Root ein anderes, unabhängiges Projekt enthält):
    (`src/lib/supabase.ts` nutzt Platzhalter-Fallbacks, damit der Next-Build
    nicht an fehlenden Env-Variablen scheitert).
 
-Noch offen (nicht Teil dieser Session, bewusst nicht gebaut): Auth/Login,
-Onboarding, Trip-Dashboard und alle weiteren Sitemap-Screens.
+7. Login / Magic-Link (`src/app/login/page.tsx`) auf Supabase Auth
+   (`@supabase/ssr`, Cookie-Sessions). Session-Refresh und Schutz von `/trips`
+   laufen über `src/proxy.ts` (Next.js 16 hat `middleware.ts` durch `proxy.ts`
+   ersetzt). Der Magic-Link landet auf `src/app/auth/callback/route.ts`, das den
+   Code gegen eine Session tauscht und beim ersten Login das Profil anlegt.
+   RLS-Policies in `supabase/migrations/0002_rls.sql`.
+
+**Demo-Modus:** Solange `NEXT_PUBLIC_SUPABASE_URL`/`..._ANON_KEY` fehlen, ist
+`isSupabaseConfigured` false. Dann zeigt die Trip-Liste die Demo-Daten aus
+`src/lib/demo-data.ts` (sichtbar als Hinweis gekennzeichnet) und der
+Auth-Schutz in `src/proxy.ts` greift nicht — sonst wären die Screens ohne
+verbundenes Projekt gar nicht aufrufbar. Sobald echte Env-Variablen gesetzt
+sind, entfällt beides automatisch.
+
+Noch offen (nicht Teil dieser Session, bewusst nicht gebaut): Onboarding,
+Ausgaben-Screens, Teilnehmer-Einladung und alle weiteren Sitemap-Screens.

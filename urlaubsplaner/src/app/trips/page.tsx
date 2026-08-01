@@ -2,38 +2,13 @@ import Link from "next/link";
 import { AmbientBackground } from "@/components/AmbientBackground";
 import { EmptyTripsState } from "@/components/EmptyTripsState";
 import { TripCard } from "@/components/TripCard";
-import type { TripListItem } from "@/lib/types";
-
-// TODO: durch echte Supabase-Query ersetzen, sobald Auth/Trips angebunden sind.
-const mockTrips: TripListItem[] = [
-  {
-    id: "1",
-    name: "Lissabon",
-    destination: "Portugal",
-    startDate: "2026-09-12",
-    endDate: "2026-09-16",
-    currency: "EUR",
-    status: "planning",
-    totalSpent: 620,
-    participantInitials: ["A", "M", "S"],
-  },
-  {
-    id: "2",
-    name: "Wanderwoche Dolomiten",
-    destination: "Italien",
-    startDate: "2026-07-03",
-    endDate: "2026-07-09",
-    currency: "EUR",
-    status: "completed",
-    totalSpent: 940,
-    participantInitials: ["A", "T"],
-  },
-];
+import { getTrips } from "@/lib/trips";
 
 function AddTripButton() {
   return (
     <Link
       href="/trips/new"
+      aria-label="Neuen Urlaub anlegen"
       className="flex h-10 w-10 items-center justify-center rounded-sm border border-white/75 bg-white/42 shadow-[0_4px_14px_rgba(80,90,140,0.12)] backdrop-blur-[14px]"
     >
       <svg
@@ -51,8 +26,8 @@ function AddTripButton() {
   );
 }
 
-export default function TripsPage() {
-  const trips = mockTrips;
+export default async function TripsPage() {
+  const { trips, isDemo } = await getTrips();
 
   return (
     <>
@@ -65,6 +40,12 @@ export default function TripsPage() {
           </div>
           <AddTripButton />
         </header>
+
+        {isDemo && (
+          <p className="mt-4 rounded-xs border border-white/75 bg-white/42 px-3 py-2 text-body-sm text-ink-soft backdrop-blur-[14px]">
+            Demo-Daten — es ist noch kein Supabase-Projekt verbunden.
+          </p>
+        )}
 
         <main className="mt-6 flex flex-1 flex-col">
           {trips.length === 0 ? (
