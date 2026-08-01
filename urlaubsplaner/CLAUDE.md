@@ -246,6 +246,11 @@ JetBrains Mono.
 > `src/app/trips/page.tsx`. Visuelle Navigationsstruktur:
 > `reference/Sitemap_Urlaubsplaner.html`.
 
+> Tab-Struktur des Dashboards: `src/lib/trip-tabs.ts`. Ein neuer Kind-Screen
+> wird gebaut und bekommt dort `ready: true` — die Navigation zieht automatisch
+> nach. Noch nicht gebaute Tabs erscheinen sichtbar als „bald" statt auf 404 zu
+> verlinken.
+
 ### Architektur-Erkenntnisse aus der Sitemap
 
 - **Trip-Dashboard ist der Flaschenhals** — sechs Screens (Terminplan,
@@ -330,6 +335,18 @@ Repos, da das Repo-Root ein anderes, unabhängiges Projekt enthält):
 Auth-Schutz in `src/proxy.ts` greift nicht — sonst wären die Screens ohne
 verbundenes Projekt gar nicht aufrufbar. Sobald echte Env-Variablen gesetzt
 sind, entfällt beides automatisch.
+
+8. Trip-Dashboard als Navigations-Hub (`src/app/trips/[id]/`). Header und
+   Tab-Leiste liegen im `layout.tsx` und bleiben über alle Kind-Screens stehen;
+   `page.tsx` ist die Übersicht mit Gesamtkosten, nächstem Termin,
+   Wer-schuldet-wem und Mitreisenden.
+
+**Kostenaufteilung:** `src/lib/settle.ts` verrechnet die Salden
+(ausgelegt − eigener Anteil) zu möglichst wenigen Zahlungen, statt jede Ausgabe
+einzeln zurückzuzahlen. Die Logik wurde gegen fünf Fälle geprüft (einfache
+Aufteilung, bereits ausgeglichen, gegenseitige Auslagen, Summenerhaltung,
+Rundungsreste) — bislang ohne Test-Runner im Projekt. Wenn die Logik wächst
+(Teilzahlungen, Multi-Währung), lohnt sich `node --test` als nächster Schritt.
 
 Noch offen (nicht Teil dieser Session, bewusst nicht gebaut): Onboarding,
 Ausgaben-Screens, Teilnehmer-Einladung und alle weiteren Sitemap-Screens.
