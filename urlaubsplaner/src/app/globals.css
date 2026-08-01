@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #25324a;
+}
+
+/* Design-Tokens aus CLAUDE.md / Design_System_Urlaubsplaner (Light Glassmorphism v1.0) */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-jakarta);
+
+  /* Farben */
+  --color-sky: #eaf3fb;
+  --color-dawn: #fdeedd;
+  --color-blush: #fbe1e3;
+  --color-coral: #f0865a;
+  --color-coral-deep: #e06a3e;
+  --color-teal: #3e93a6;
+  --color-ink: #25324a;
+  --color-ink-soft: #5c6c82;
+  --color-ink-faint: #8b98ac;
+  --color-blob-blue: #bfd9f2;
+  --color-blob-peach: #f6c9b0;
+  --color-blob-pink: #e9c6d8;
+
+  /* Radius-Skala */
+  --radius-xs: 10px;
+  --radius-sm: 14px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 26px;
+  --radius-xxl: 46px;
+
+  /* Typografie */
+  --text-display: 32px;
+  --text-display--line-height: 1.15;
+  --text-display--letter-spacing: -0.5px;
+  --text-display--font-weight: 800;
+
+  --text-h2: 22px;
+  --text-h2--line-height: 1.2;
+  --text-h2--font-weight: 800;
+
+  --text-h3: 17px;
+  --text-h3--line-height: 1.3;
+  --text-h3--font-weight: 700;
+
+  --text-body: 14px;
+  --text-body--line-height: 1.55;
+  --text-body--font-weight: 500;
+
+  --text-body-sm: 12.5px;
+  --text-body-sm--line-height: 1.4;
+  --text-body-sm--font-weight: 500;
+
+  --text-label: 10.5px;
+  --text-label--line-height: 1.3;
+  --text-label--font-weight: 700;
+  --text-label--letter-spacing: 0.6px;
+
+  --text-button: 14.5px;
+  --text-button--line-height: 1.2;
+  --text-button--font-weight: 700;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+}
