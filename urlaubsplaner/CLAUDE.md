@@ -210,8 +210,9 @@ JetBrains Mono.
 - **Input Field**: `border-radius: 16px`, Glass-Fill, Fokus-Border Coral
 
 > Umgesetzt als Tailwind-Theme-Tokens: `src/app/globals.css` (`@theme` Block).
-> Referenzmaterial (nicht im Repo, nur als Vorlage genutzt):
-> `Design_System_Urlaubsplaner`, `Onboarding_Glassmorphism_Hell`.
+> Referenzmaterial (als Vorlage genutzt, `reference/`-Ordner):
+> `Sitemap_Urlaubsplaner.html`. `Design_System_Urlaubsplaner` und
+> `Onboarding_Glassmorphism_Hell` lagen nur als Upload vor, nicht im Repo.
 
 ## Sitemap — Screens für MVP (Phase 1–3)
 
@@ -233,7 +234,8 @@ JetBrains Mono.
 | 14 | Trip-Einstellungen | 2 |
 
 > Umgesetzt: Screen 3 „Trip-Liste" (leerer Zustand + Liste) unter
-> `src/app/trips/page.tsx`.
+> `src/app/trips/page.tsx`. Visuelle Navigationsstruktur:
+> `reference/Sitemap_Urlaubsplaner.html`.
 
 ### Architektur-Erkenntnisse aus der Sitemap
 

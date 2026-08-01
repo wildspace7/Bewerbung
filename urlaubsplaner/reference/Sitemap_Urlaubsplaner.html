@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sitemap · Urlaubsplaner App</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&display=swap');
+
+  :root{
+    --sky:#EAF3FB; --dawn:#FDEEDD; --blush:#FBE1E3;
+    --ink:#25324A; --ink-soft:#5C6C82; --ink-faint:#8B98AC;
+    --coral:#F0865A; --coral-deep:#E06A3E; --teal:#3E93A6; --lavender:#8B7FC9;
+    --glass-fill: rgba(255,255,255,0.7);
+    --glass-border: rgba(255,255,255,0.85);
+    --hub-fill: #2C3B54;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; font-family:'Plus Jakarta Sans',sans-serif; color:var(--ink);
+    background:
+      radial-gradient(circle at 10% 0%, #E4EEFA 0%, transparent 40%),
+      radial-gradient(circle at 95% 15%, #FCE3D6 0%, transparent 35%),
+      #FBF9F6;
+    min-height:100vh;
+  }
+
+  header{
+    padding:26px 20px 14px 20px; text-align:center;
+  }
+  header .eyebrow{ font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--coral-deep); margin-bottom:8px; }
+  header h1{ font-size:clamp(22px,4vw,30px); font-weight:800; margin:0 0 8px 0; letter-spacing:-0.4px; }
+  header p{ font-size:13px; color:var(--ink-soft); max-width:520px; margin:0 auto; line-height:1.55; }
+
+  #legend{
+    display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
+    padding:14px 16px 4px 16px;
+  }
+  .leg-item{ display:flex; align-items:center; gap:6px; font-size:11px; font-weight:700; color:var(--ink-soft); }
+  .leg-dot{ width:10px; height:10px; border-radius:50%; }
+  .leg-line{ width:22px; height:0; border-top:2px solid var(--ink-faint); }
+  .leg-line.dashed{ border-top:2px dashed var(--coral); }
+
+  #scroller{
+    overflow-x:auto; -webkit-overflow-scrolling:touch; padding:20px 0 50px 0;
+  }
+  #canvas-wrap{ position:relative; width:1800px; height:960px; margin:0 auto; }
+  svg#connectors{ position:absolute; top:0; left:0; width:1800px; height:960px; }
+
+  .node{
+    position:absolute; border-radius:16px; padding:12px 14px;
+    background:var(--glass-fill); border:1px solid var(--glass-border);
+    backdrop-filter:blur(10px); box-shadow:0 10px 24px -14px rgba(90,100,150,0.4);
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .node.hub{ background:var(--hub-fill); border-color:rgba(255,255,255,0.15); }
+  .node.hub .n-title{ color:#fff; }
+  .node.hub .n-sub{ color:rgba(255,255,255,0.65); }
+
+  .n-title{ font-size:13.5px; font-weight:800; color:var(--ink); line-height:1.25; }
+  .n-sub{ font-size:9.5px; color:var(--ink-faint); margin-top:2px; font-weight:600; }
+  .phase-tag{
+    position:absolute; top:-8px; right:-8px; width:20px; height:20px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:800; color:#fff;
+    border:2px solid #FBF9F6;
+  }
+
+  footer{ text-align:center; padding:0 20px 60px 20px; color:var(--ink-faint); font-size:11.5px; max-width:560px; margin:0 auto; line-height:1.6; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Sitemap</div>
+  <h1>Screen-Struktur &amp; Navigation</h1>
+  <p>Alle Screens aus der CLAUDE.md als Hierarchie — wer von wo aus erreichbar ist. Horizontal scrollen für die volle Breite.</p>
+</header>
+
+<div id="legend">
+  <div class="leg-item"><span class="leg-dot" style="background:var(--hub-fill);"></span> Navigations-Hub</div>
+  <div class="leg-item"><span class="leg-dot" style="background:var(--coral);"></span> Phase 1</div>
+  <div class="leg-item"><span class="leg-dot" style="background:var(--teal);"></span> Phase 2</div>
+  <div class="leg-item"><span class="leg-dot" style="background:var(--lavender);"></span> Phase 3</div>
+  <div class="leg-item"><span class="leg-line"></span> Navigations-Pfad</div>
+  <div class="leg-item"><span class="leg-line dashed"></span> Nutzer-Flow (nach Aktion)</div>
+</div>
+
+<div id="scroller">
+  <div id="canvas-wrap">
+    <svg id="connectors"></svg>
+    <div id="nodes"></div>
+  </div>
+</div>
+
+<footer>
+  Diese Struktur ergänzt die Screens-Tabelle in der CLAUDE.md — dort steht <em>was</em> pro Phase gebaut wird,
+  hier steht <em>wie die Screens zusammenhängen</em>. Beides zusammen ist die Grundlage für die erste Claude-Code-Session.
+</footer>
+
+<script>
+const PHASE_COLOR = { hub: "hub", 1: "#F0865A", 2: "#3E93A6", 3: "#8B7FC9" };
+
+const nodes = [
+  { id:"onboarding", label:"Onboarding", sub:"1–2 Screens", x:850, y:30, w:230, h:60, type:"hub", parent:null },
+  { id:"login", label:"Login", sub:"Magic-Link", x:850, y:160, w:230, h:60, type:"hub", parent:"onboarding" },
+  { id:"triplist", label:"Trip-Liste", sub:"Startpunkt nach Login", x:850, y:290, w:280, h:72, type:"hub", parent:"login" },
+
+  { id:"tripcreate", label:"Trip erstellen", sub:"Name, Ziel, Datum", x:555, y:450, w:210, h:60, type:1, parent:"triplist" },
+  { id:"dashboard", label:"Trip-Dashboard", sub:"Kosten · Termin · Schulden", x:1040, y:450, w:280, h:72, type:"hub", parent:"triplist" },
+
+  { id:"termin", label:"Terminplan", sub:"Tagesansicht", x:515, y:630, w:180, h:60, type:2, parent:"dashboard" },
+  { id:"ausgaben", label:"Ausgaben-Liste", sub:"Alle Ausgaben", x:725, y:630, w:180, h:60, type:1, parent:"dashboard" },
+  { id:"packliste", label:"Packliste", sub:"Checkliste", x:935, y:630, w:180, h:60, type:2, parent:"dashboard" },
+  { id:"dokumente", label:"Dokumente", sub:"Tickets, Buchungen", x:1145, y:630, w:180, h:60, type:3, parent:"dashboard" },
+  { id:"tagebuch", label:"Tagebuch", sub:"Fotos &amp; Notizen", x:1355, y:630, w:180, h:60, type:2, parent:"dashboard" },
+  { id:"teilnehmer", label:"Teilnehmer &amp; Einstellungen", sub:"Einladungslink", x:1565, y:630, w:190, h:60, type:1, parent:"dashboard" },
+
+  { id:"ausgabeadd", label:"Ausgabe hinzufügen", sub:"Formular / Modal", x:620, y:810, w:190, h:60, type:1, parent:"ausgaben" },
+  { id:"split", label:"Kostenaufteilung", sub:"Wer schuldet wem", x:830, y:810, w:190, h:60, type:1, parent:"ausgaben" },
+];
+
+const flowEdges = [
+  ["tripcreate","dashboard"],
+];
+
+const byId = Object.fromEntries(nodes.map(n=>[n.id,n]));
+const nodesLayer = document.getElementById("nodes");
+const svg = document.getElementById("connectors");
+const svgNS = "http://www.w3.org/2000/svg";
+
+function elbowPath(px,py,cx,cy){
+  const midY = py + (cy-py)/2;
+  return `M${px},${py} L${px},${midY} L${cx},${midY} L${cx},${cy}`;
+}
+
+// draw structural (parent->child) connectors
+nodes.forEach(n=>{
+  if(!n.parent) return;
+  const p = byId[n.parent];
+  const px = p.x, py = p.y + p.h;
+  const cx = n.x, cy = n.y;
+  const path = document.createElementNS(svgNS,"path");
+  path.setAttribute("d", elbowPath(px,py,cx,cy));
+  path.setAttribute("fill","none");
+  path.setAttribute("stroke","#B9C3D4");
+  path.setAttribute("stroke-width","1.6");
+  svg.appendChild(path);
+});
+
+// draw dashed flow edges
+flowEdges.forEach(([fromId,toId])=>{
+  const f = byId[fromId], t = byId[toId];
+  const path = document.createElementNS(svgNS,"path");
+  const fx = f.x + f.w, fy = f.y + f.h/2;
+  const tx = t.x, ty = t.y + t.h/2;
+  const mx = fx + (tx-fx)/2;
+  path.setAttribute("d", `M${fx},${fy} C${mx},${fy} ${mx},${ty} ${tx},${ty}`);
+  path.setAttribute("fill","none");
+  path.setAttribute("stroke","#F0865A");
+  path.setAttribute("stroke-width","2");
+  path.setAttribute("stroke-dasharray","6 5");
+  svg.appendChild(path);
+});
+
+// draw nodes
+nodes.forEach(n=>{
+  const el = document.createElement("div");
+  el.className = "node" + (n.type==="hub" ? " hub" : "");
+  el.style.left = n.x + "px";
+  el.style.top = n.y + "px";
+  el.style.width = n.w + "px";
+  el.style.height = n.h + "px";
+  el.innerHTML = `<div class="n-title">${n.label}</div><div class="n-sub">${n.sub}</div>`;
+  if(n.type !== "hub"){
+    const tag = document.createElement("div");
+    tag.className = "phase-tag";
+    tag.style.background = PHASE_COLOR[n.type];
+    tag.textContent = n.type;
+    el.appendChild(tag);
+  }
+  nodesLayer.appendChild(el);
+});
+</script>
+</body>
+</html>
