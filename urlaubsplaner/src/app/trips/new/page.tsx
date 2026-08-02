@@ -1,46 +1,11 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AmbientBackground } from "@/components/AmbientBackground";
+import { BackButton } from "@/components/BackButton";
+import { Field } from "@/components/FormField";
 import { createClient } from "@/lib/supabase/client";
-
-function BackButton() {
-  return (
-    <Link
-      href="/trips"
-      className="flex h-10 w-10 items-center justify-center rounded-sm border border-white/75 bg-white/42 shadow-[0_4px_14px_rgba(80,90,140,0.12)] backdrop-blur-[14px]"
-    >
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={2.4}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-4 w-4 text-ink"
-      >
-        <path d="M15 18l-6-6 6-6" />
-      </svg>
-    </Link>
-  );
-}
-
-function Field({
-  label,
-  ...props
-}: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) {
-  return (
-    <label className="block">
-      <span className="text-label uppercase text-ink-faint">{label}</span>
-      <input
-        {...props}
-        className="mt-1.5 w-full rounded-md border border-white/75 bg-white/42 px-4 py-3 text-body text-ink placeholder:text-ink-faint backdrop-blur-[14px] outline-none transition-colors focus:border-coral"
-      />
-    </label>
-  );
-}
 
 export default function NewTripPage() {
   const router = useRouter();
@@ -98,7 +63,7 @@ export default function NewTripPage() {
       <AmbientBackground />
       <div className="mx-auto flex min-h-screen w-full max-w-lg flex-1 flex-col px-5 py-8">
         <header className="flex items-center gap-3">
-          <BackButton />
+          <BackButton href="/trips" />
           <h1 className="text-h2 text-ink">Neuer Urlaub</h1>
         </header>
 

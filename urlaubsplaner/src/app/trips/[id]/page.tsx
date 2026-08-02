@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTripDetail } from "@/lib/trip-detail";
 import { formatDay, formatMoney } from "@/lib/format";
@@ -49,6 +50,12 @@ export default async function TripDashboardPage({
             pro Person bei {trip.participants.length} Mitreisenden
           </p>
         )}
+        <Link
+          href={`/trips/${trip.id}/ausgaben`}
+          className="mt-3 inline-block text-body-sm font-bold text-coral-deep"
+        >
+          Alle Ausgaben ansehen →
+        </Link>
       </Card>
 
       <Card label="Nächster Termin">

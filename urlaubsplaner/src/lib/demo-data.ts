@@ -1,4 +1,4 @@
-import type { TripDetail, TripListItem } from "./types";
+import type { ExpenseListItem, TripDetail, TripListItem } from "./types";
 
 // Nur aktiv, solange kein echtes Supabase-Projekt verbunden ist
 // (isSupabaseConfigured === false). Die UI kennzeichnet diesen Zustand
@@ -72,4 +72,77 @@ export const demoTripDetails: Record<string, TripDetail> = {
     debts: [],
     nextItem: null,
   },
+};
+
+export const demoExpenses: Record<string, ExpenseListItem[]> = {
+  "demo-lissabon": [
+    {
+      id: "e1",
+      title: "Abendessen · Time Out Market",
+      amount: 42,
+      currency: "EUR",
+      category: "essen",
+      paymentMethod: "karte",
+      paidByName: "Anna",
+      expenseDate: "2026-09-12",
+      splitCount: 3,
+    },
+    {
+      id: "e2",
+      title: "Taxi zum Hotel",
+      amount: 18,
+      currency: "EUR",
+      category: "transport",
+      paymentMethod: "bargeld",
+      paidByName: "Marco",
+      expenseDate: "2026-09-12",
+      splitCount: 3,
+    },
+    {
+      id: "e3",
+      title: "Hotel Alfama, 4 Nächte",
+      amount: 480,
+      currency: "EUR",
+      category: "hotel",
+      paymentMethod: "karte",
+      paidByName: "Anna",
+      expenseDate: "2026-09-12",
+      splitCount: 3,
+    },
+    {
+      id: "e4",
+      title: "Belém Tower Tickets",
+      amount: 30,
+      currency: "EUR",
+      category: "aktivitaet",
+      paymentMethod: "karte",
+      paidByName: "Sofia",
+      expenseDate: "2026-09-13",
+      splitCount: 3,
+    },
+  ],
+  "demo-dolomiten": [
+    {
+      id: "e5",
+      title: "Hütte Übernachtung",
+      amount: 860,
+      currency: "EUR",
+      category: "hotel",
+      paymentMethod: "karte",
+      paidByName: "Anna",
+      expenseDate: "2026-07-03",
+      splitCount: 2,
+    },
+    {
+      id: "e6",
+      title: "Bergbahn Tickets",
+      amount: 80,
+      currency: "EUR",
+      category: "transport",
+      paymentMethod: "bargeld",
+      paidByName: "Tim",
+      expenseDate: "2026-07-05",
+      splitCount: 2,
+    },
+  ],
 };

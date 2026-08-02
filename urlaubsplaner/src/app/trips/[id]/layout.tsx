@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AmbientBackground } from "@/components/AmbientBackground";
+import { BackButton } from "@/components/BackButton";
 import { TripTabs } from "@/components/TripTabs";
 import { getTripDetail } from "@/lib/trip-detail";
 import { formatDateRange } from "@/lib/format";
@@ -25,23 +25,9 @@ export default async function TripLayout({
       <div className="mx-auto flex min-h-screen w-full max-w-lg flex-1 flex-col px-5 py-8">
         <header>
           <div className="flex items-start gap-3">
-            <Link
-              href="/trips"
-              aria-label="Zurück zur Trip-Liste"
-              className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-sm border border-white/75 bg-white/42 shadow-[0_4px_14px_rgba(80,90,140,0.12)] backdrop-blur-[14px]"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2.4}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-4 w-4 text-ink"
-              >
-                <path d="M15 18l-6-6 6-6" />
-              </svg>
-            </Link>
+            <div className="mt-1">
+              <BackButton href="/trips" />
+            </div>
             <div className="min-w-0">
               <p className="text-label uppercase text-ink-faint">
                 {trip.destination ?? "Reiseziel offen"}

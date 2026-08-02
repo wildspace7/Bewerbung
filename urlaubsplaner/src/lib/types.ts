@@ -37,6 +37,29 @@ export interface NextItineraryItem {
   location: string | null;
 }
 
+export type ExpenseCategory =
+  | "flug"
+  | "hotel"
+  | "essen"
+  | "aktivitaet"
+  | "transport"
+  | "sonstiges";
+
+export type PaymentMethod = "karte" | "bargeld";
+
+export interface ExpenseListItem {
+  id: string;
+  title: string;
+  amount: number;
+  currency: string;
+  category: ExpenseCategory | null;
+  paymentMethod: PaymentMethod;
+  paidByName: string;
+  expenseDate: string;
+  /** Anzahl Teilnehmer, auf die die Ausgabe aufgeteilt ist. */
+  splitCount: number;
+}
+
 export interface TripDetail {
   id: string;
   name: string;

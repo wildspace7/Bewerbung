@@ -348,5 +348,15 @@ Aufteilung, bereits ausgeglichen, gegenseitige Auslagen, Summenerhaltung,
 Rundungsreste) — bislang ohne Test-Runner im Projekt. Wenn die Logik wächst
 (Teilzahlungen, Multi-Währung), lohnt sich `node --test` als nächster Schritt.
 
+9. Ausgabe hinzufügen + Ausgaben-Liste (`src/app/trips/[id]/ausgaben/`).
+   `src/lib/split-equally.ts` teilt Cent-genau zu gleichen Teilen auf alle
+   aktuellen Trip-Teilnehmer:innen auf (Rundungsrest geht an die erste Person,
+   damit die Summe exakt aufgeht — gegen vier Fälle geprüft). Individuelle
+   Anteile pro Person sind ein möglicher Ausbauschritt für später. Der
+   Ausgaben-Tab steht jetzt auf `ready: true` in `src/lib/trip-tabs.ts`.
+   `BackButton` und `Field`/`SelectField` wurden aus dem Trip-erstellen-Screen
+   in `src/components/` extrahiert, da sie jetzt zweifach gebraucht werden.
+
 Noch offen (nicht Teil dieser Session, bewusst nicht gebaut): Onboarding,
-Ausgaben-Screens, Teilnehmer-Einladung und alle weiteren Sitemap-Screens.
+Teilnehmer-Einladung und alle weiteren Sitemap-Screens (Terminplan,
+Packliste, Tagebuch, Dokumente, Trip-Einstellungen).
