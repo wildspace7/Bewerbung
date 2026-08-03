@@ -357,6 +357,18 @@ Rundungsreste) — bislang ohne Test-Runner im Projekt. Wenn die Logik wächst
    `BackButton` und `Field`/`SelectField` wurden aus dem Trip-erstellen-Screen
    in `src/components/` extrahiert, da sie jetzt zweifach gebraucht werden.
 
+10. Teilnehmer verwalten / Einladungslink (`src/app/trips/[id]/teilnehmer/`).
+    Der Einladungslink zeigt auf `src/app/trips/[id]/join/route.ts` — die
+    UUID des Trips im Link ist selbst das "Geheimnis": eingeloggt öffnen und
+    man wird automatisch Mitglied (`trip_participants`-Insert mit
+    `role: 'member'`). Wer den Link nicht hat, kann den Trip über RLS ohnehin
+    nicht sehen. Mitglieder (nicht Organisator:innen) können den Trip über
+    `LeaveTripButton` wieder verlassen; Entfernen anderer Teilnehmer:innen
+    durch die Organisation ist noch nicht gebaut (bräuchte eine zusätzliche
+    RLS-Policy, aktuell erlaubt `participants_delete_self` nur das Löschen der
+    eigenen Mitgliedschaft).
+
 Noch offen (nicht Teil dieser Session, bewusst nicht gebaut): Onboarding,
-Teilnehmer-Einladung und alle weiteren Sitemap-Screens (Terminplan,
-Packliste, Tagebuch, Dokumente, Trip-Einstellungen).
+Entfernen anderer Teilnehmer:innen durch die Organisation und alle weiteren
+Sitemap-Screens (Terminplan, Packliste, Tagebuch, Dokumente,
+Trip-Einstellungen).

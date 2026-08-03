@@ -126,6 +126,12 @@ export default async function TripDashboardPage({
             ))}
           </ul>
         )}
+        <Link
+          href={`/trips/${trip.id}/teilnehmer`}
+          className="mt-3 inline-block text-body-sm font-bold text-coral-deep"
+        >
+          Teilnehmer verwalten / einladen →
+        </Link>
       </Card>
     </div>
   );
