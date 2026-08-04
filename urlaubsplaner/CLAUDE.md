@@ -376,7 +376,16 @@ Rundungsreste) — bislang ohne Test-Runner im Projekt. Wenn die Logik wächst
     Termin weiterhin selbst aus `itinerary_items`, jetzt aber mit echten
     Daten statt einer Dashboard-Lücke. Terminplan-Tab steht auf `ready: true`.
 
+12. Packliste (`src/app/trips/[id]/packliste/`, Phase 2). Einzige direkt
+    interaktive Liste bisher: Abhaken/Hinzufügen/Entfernen passiert
+    client-seitig mit optimistischem State-Update (`src/components/PackingList.tsx`)
+    statt komplettem Seiten-Reload — schlägt ein Supabase-Call fehl, wird der
+    optimistische Change zurückgerollt und ein Fehlertext angezeigt (im
+    Demo-Modus reproduzierbar: Klick auf ein Item kippt kurz um und springt
+    zurück). Gruppierung nach Kategorie in `src/lib/packing-categories.ts`,
+    analog zu `groupByDay` bei Terminplan. Packliste-Tab steht auf
+    `ready: true`.
+
 Noch offen (nicht Teil dieser Session, bewusst nicht gebaut): Onboarding,
 Entfernen anderer Teilnehmer:innen durch die Organisation und die
-verbleibenden Sitemap-Screens (Packliste, Tagebuch, Dokumente,
-Trip-Einstellungen).
+verbleibenden Sitemap-Screens (Tagebuch, Dokumente, Trip-Einstellungen).

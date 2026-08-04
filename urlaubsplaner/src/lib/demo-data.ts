@@ -1,6 +1,7 @@
 import type {
   ExpenseListItem,
   ItineraryItem,
+  PackingItem,
   TripDetail,
   TripListItem,
 } from "./types";
@@ -198,5 +199,19 @@ export const demoItinerary: Record<string, ItineraryItem[]> = {
       location: "Rifugio Lagazuoi",
       notes: null,
     },
+  ],
+};
+
+export const demoPacking: Record<string, PackingItem[]> = {
+  "demo-lissabon": [
+    { id: "pk1", name: "Reisepass", category: "dokumente", isChecked: true },
+    { id: "pk2", name: "Ladekabel", category: "technik", isChecked: false },
+    { id: "pk3", name: "Sonnencreme", category: "hygiene", isChecked: false },
+    { id: "pk4", name: "Leichte Jacke", category: "kleidung", isChecked: true },
+    { id: "pk5", name: "Powerbank", category: "technik", isChecked: false },
+  ],
+  "demo-dolomiten": [
+    { id: "pk6", name: "Wanderschuhe", category: "kleidung", isChecked: true },
+    { id: "pk7", name: "Stirnlampe", category: "technik", isChecked: false },
   ],
 };

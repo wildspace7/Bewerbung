@@ -69,6 +69,20 @@ export interface ItineraryItem {
   notes: string | null;
 }
 
+export type PackingCategory =
+  | "kleidung"
+  | "technik"
+  | "dokumente"
+  | "hygiene"
+  | "sonstiges";
+
+export interface PackingItem {
+  id: string;
+  name: string;
+  category: PackingCategory | null;
+  isChecked: boolean;
+}
+
 export interface TripDetail {
   id: string;
   name: string;
