@@ -17,7 +17,7 @@ export const tripTabs: TripTab[] = [
   { segment: "", label: "Übersicht", phase: 1, ready: true },
   { segment: "ausgaben", label: "Ausgaben", phase: 1, ready: true },
   { segment: "teilnehmer", label: "Teilnehmer", phase: 1, ready: true },
-  { segment: "terminplan", label: "Terminplan", phase: 2, ready: false },
+  { segment: "terminplan", label: "Terminplan", phase: 2, ready: true },
   { segment: "packliste", label: "Packliste", phase: 2, ready: false },
   { segment: "tagebuch", label: "Tagebuch", phase: 2, ready: false },
   { segment: "dokumente", label: "Dokumente", phase: 3, ready: false },

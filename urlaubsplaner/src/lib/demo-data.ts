@@ -1,4 +1,9 @@
-import type { ExpenseListItem, TripDetail, TripListItem } from "./types";
+import type {
+  ExpenseListItem,
+  ItineraryItem,
+  TripDetail,
+  TripListItem,
+} from "./types";
 
 // Nur aktiv, solange kein echtes Supabase-Projekt verbunden ist
 // (isSupabaseConfigured === false). Die UI kennzeichnet diesen Zustand
@@ -48,11 +53,13 @@ export const demoTripDetails: Record<string, TripDetail> = {
       { fromName: "Marco", toName: "Anna", amount: 84.5 },
       { fromName: "Sofia", toName: "Anna", amount: 42 },
     ],
+    // Muss mit dem chronologisch ersten Eintrag in demoItinerary["demo-lissabon"]
+    // übereinstimmen (echte Trips leiten das automatisch aus itinerary_items ab).
     nextItem: {
-      title: "Abendessen · Time Out Market",
+      title: "Check-in Hotel Alfama",
       dayDate: "2026-09-12",
-      startTime: "19:30",
-      location: "Mercado da Ribeira",
+      startTime: "14:00",
+      location: "Alfama",
     },
   },
   "demo-dolomiten": {
@@ -143,6 +150,53 @@ export const demoExpenses: Record<string, ExpenseListItem[]> = {
       paidByName: "Tim",
       expenseDate: "2026-07-05",
       splitCount: 2,
+    },
+  ],
+};
+
+export const demoItinerary: Record<string, ItineraryItem[]> = {
+  "demo-lissabon": [
+    {
+      id: "i1",
+      dayDate: "2026-09-12",
+      startTime: "14:00",
+      title: "Check-in Hotel Alfama",
+      location: "Alfama",
+      notes: null,
+    },
+    {
+      id: "i2",
+      dayDate: "2026-09-12",
+      startTime: "19:30",
+      title: "Abendessen · Time Out Market",
+      location: "Mercado da Ribeira",
+      notes: "Reservierung unter Anna, 19:30 Uhr",
+    },
+    {
+      id: "i3",
+      dayDate: "2026-09-13",
+      startTime: "10:00",
+      title: "Belém Tower & Pastéis de Belém",
+      location: "Belém",
+      notes: null,
+    },
+    {
+      id: "i4",
+      dayDate: "2026-09-14",
+      startTime: null,
+      title: "Tagesausflug Sintra",
+      location: "Sintra",
+      notes: "Zug ab Rossio, ca. 40 Min.",
+    },
+  ],
+  "demo-dolomiten": [
+    {
+      id: "i5",
+      dayDate: "2026-07-03",
+      startTime: "16:00",
+      title: "Ankunft Hütte",
+      location: "Rifugio Lagazuoi",
+      notes: null,
     },
   ],
 };

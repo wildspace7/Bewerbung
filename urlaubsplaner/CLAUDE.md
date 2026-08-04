@@ -368,7 +368,15 @@ Rundungsreste) — bislang ohne Test-Runner im Projekt. Wenn die Logik wächst
     RLS-Policy, aktuell erlaubt `participants_delete_self` nur das Löschen der
     eigenen Mitgliedschaft).
 
+11. Terminplan / Tagesansicht (`src/app/trips/[id]/terminplan/`, Phase 2 laut
+    Sitemap — als erster Phase-2-Screen bewusst vorgezogen, weil die
+    Dashboard-Karte „Nächster Termin" schon seit dem Trip-Dashboard auf
+    `itinerary_items` wartete). `src/lib/itinerary.ts` gruppiert die Termine
+    nach Tag (`groupByDay`); `getTripDetail` liest den nächsten anstehenden
+    Termin weiterhin selbst aus `itinerary_items`, jetzt aber mit echten
+    Daten statt einer Dashboard-Lücke. Terminplan-Tab steht auf `ready: true`.
+
 Noch offen (nicht Teil dieser Session, bewusst nicht gebaut): Onboarding,
-Entfernen anderer Teilnehmer:innen durch die Organisation und alle weiteren
-Sitemap-Screens (Terminplan, Packliste, Tagebuch, Dokumente,
+Entfernen anderer Teilnehmer:innen durch die Organisation und die
+verbleibenden Sitemap-Screens (Packliste, Tagebuch, Dokumente,
 Trip-Einstellungen).

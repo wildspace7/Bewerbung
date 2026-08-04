@@ -60,6 +60,15 @@ export interface ExpenseListItem {
   splitCount: number;
 }
 
+export interface ItineraryItem {
+  id: string;
+  dayDate: string;
+  startTime: string | null;
+  title: string;
+  location: string | null;
+  notes: string | null;
+}
+
 export interface TripDetail {
   id: string;
   name: string;

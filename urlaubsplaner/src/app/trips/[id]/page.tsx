@@ -71,9 +71,15 @@ export default async function TripDashboardPage({
           </>
         ) : (
           <p className="text-body text-ink-soft">
-            Kein Termin geplant — der Terminplan kommt in Phase 2.
+            Noch kein Termin geplant.
           </p>
         )}
+        <Link
+          href={`/trips/${trip.id}/terminplan`}
+          className="mt-3 inline-block text-body-sm font-bold text-coral-deep"
+        >
+          Terminplan ansehen →
+        </Link>
       </Card>
 
       <Card label="Wer schuldet wem">
