@@ -83,6 +83,13 @@ export interface PackingItem {
   isChecked: boolean;
 }
 
+export interface DiaryEntry {
+  id: string;
+  entryDate: string;
+  textContent: string | null;
+  authorName: string;
+}
+
 export interface TripDetail {
   id: string;
   name: string;

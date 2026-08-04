@@ -1,4 +1,5 @@
 import type {
+  DiaryEntry,
   ExpenseListItem,
   ItineraryItem,
   PackingItem,
@@ -213,5 +214,26 @@ export const demoPacking: Record<string, PackingItem[]> = {
   "demo-dolomiten": [
     { id: "pk6", name: "Wanderschuhe", category: "kleidung", isChecked: true },
     { id: "pk7", name: "Stirnlampe", category: "technik", isChecked: false },
+  ],
+};
+
+export const demoDiaryEntries: Record<string, DiaryEntry[]> = {
+  "demo-lissabon": [
+    {
+      id: "d1",
+      entryDate: "2026-09-12",
+      textContent:
+        "Angekommen! Das Hotel in der Alfama hat einen Balkon mit Blick auf den Tejo. Abends im Time Out Market gegessen — die Warteschlange war es wert.",
+      authorName: "Anna",
+    },
+  ],
+  "demo-dolomiten": [
+    {
+      id: "d2",
+      entryDate: "2026-07-03",
+      textContent:
+        "Erste Nacht auf der Hütte. Die Wanderung morgen soll knackig werden, aber die Aussicht jetzt schon unbezahlbar.",
+      authorName: "Tim",
+    },
   ],
 };

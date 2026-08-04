@@ -386,6 +386,15 @@ Rundungsreste) — bislang ohne Test-Runner im Projekt. Wenn die Logik wächst
     analog zu `groupByDay` bei Terminplan. Packliste-Tab steht auf
     `ready: true`.
 
+13. Tagebuch — nur Text (`src/app/trips/[id]/tagebuch/`). `diary_entries`
+    (Datum, Text, Autor:in) ist vollständig angebunden; `diary_photos` bewusst
+    **nicht** — Fotos brauchen Supabase Storage (Bucket anlegen,
+    Storage-RLS-Policies, Upload-Flow), das ist eigene Infrastrukturarbeit und
+    verdient eine eigene fokussierte Session statt hier mit reinzurutschen.
+    Leerer Zustand und Formular weisen aktuell darauf hin, dass Fotos „in
+    einer späteren Version" folgen. Tagebuch-Tab steht auf `ready: true`.
+
 Noch offen (nicht Teil dieser Session, bewusst nicht gebaut): Onboarding,
-Entfernen anderer Teilnehmer:innen durch die Organisation und die
-verbleibenden Sitemap-Screens (Tagebuch, Dokumente, Trip-Einstellungen).
+Fotos im Tagebuch (Supabase Storage), Entfernen anderer Teilnehmer:innen durch
+die Organisation und die verbleibenden Sitemap-Screens (Dokumente-Upload,
+Trip-Einstellungen).
