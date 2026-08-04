@@ -1,14 +1,9 @@
 import Link from "next/link";
 import { formatDateRange, formatMoney } from "@/lib/format";
+import { tripStatusLabels } from "@/lib/trip-status";
 import type { TripListItem } from "@/lib/types";
 
 const avatarColors = ["bg-coral", "bg-teal", "bg-ink-soft"];
-
-const statusLabels: Record<TripListItem["status"], string> = {
-  planning: "Planung",
-  active: "Aktiv",
-  completed: "Abgeschlossen",
-};
 
 export function TripCard({ trip }: { trip: TripListItem }) {
   return (
@@ -43,7 +38,7 @@ export function TripCard({ trip }: { trip: TripListItem }) {
             ))}
           </div>
           <span className="rounded-xs bg-ink/5 px-2.5 py-1 text-label uppercase text-ink-faint">
-            {statusLabels[trip.status]}
+            {tripStatusLabels[trip.status]}
           </span>
         </div>
       </Link>

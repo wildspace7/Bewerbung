@@ -21,4 +21,5 @@ export const tripTabs: TripTab[] = [
   { segment: "packliste", label: "Packliste", phase: 2, ready: true },
   { segment: "tagebuch", label: "Tagebuch", phase: 2, ready: true },
   { segment: "dokumente", label: "Dokumente", phase: 3, ready: false },
+  { segment: "einstellungen", label: "Einstellungen", phase: 2, ready: true },
 ];

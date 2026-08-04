@@ -394,7 +394,19 @@ Rundungsreste) — bislang ohne Test-Runner im Projekt. Wenn die Logik wächst
     Leerer Zustand und Formular weisen aktuell darauf hin, dass Fotos „in
     einer späteren Version" folgen. Tagebuch-Tab steht auf `ready: true`.
 
+14. Trip-Einstellungen (`src/app/trips/[id]/einstellungen/`). Bearbeiten
+    (Name, Ziel, Datum, Währung, Status) ist für alle Mitglieder möglich —
+    deckungsgleich mit der bestehenden RLS-Policy `trips_update_member`, die
+    keine Rollenprüfung macht. Löschen ist strenger: Der "Trip löschen"-Button
+    in der Gefahrenzone erscheint nur für Organisator:innen
+    (`trip.participants`-Rolle geprüft server-seitig), und
+    `trips_delete_creator` erlaubt das Löschen ohnehin nur der Person, die den
+    Trip angelegt hat — UI-Sichtbarkeit und RLS sind hier also konsistent,
+    anders als bei „Teilnehmer entfernen". `tripStatusLabels` aus
+    `src/lib/trip-status.ts` ersetzt die bisher in `TripCard` duplizierten
+    Status-Labels. Einstellungen-Tab steht auf `ready: true` (Phase 2 laut
+    Sitemap).
+
 Noch offen (nicht Teil dieser Session, bewusst nicht gebaut): Onboarding,
 Fotos im Tagebuch (Supabase Storage), Entfernen anderer Teilnehmer:innen durch
-die Organisation und die verbleibenden Sitemap-Screens (Dokumente-Upload,
-Trip-Einstellungen).
+die Organisation und Dokumente-Upload (Phase 3).
