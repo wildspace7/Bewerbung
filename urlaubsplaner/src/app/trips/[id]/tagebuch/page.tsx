@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DiaryPhotoUpload } from "@/components/DiaryPhotoUpload";
 import { formatDay } from "@/lib/format";
 import { getDiaryEntries } from "@/lib/diary";
 
@@ -29,8 +30,7 @@ export default async function TagebuchPage({
       {entries.length === 0 ? (
         <div className="rounded-xl border border-white/75 bg-white/65 p-8 text-center shadow-[0_20px_40px_-18px_rgba(90,100,150,0.35)] backdrop-blur-[18px]">
           <p className="text-body text-ink-soft">
-            Halt den ersten Moment eurer Reise fest. Fotos zu Einträgen folgen
-            in einer späteren Version.
+            Halt den ersten Moment eurer Reise fest.
           </p>
         </div>
       ) : (
@@ -51,6 +51,22 @@ export default async function TagebuchPage({
                   {entry.textContent}
                 </p>
               )}
+
+              {entry.photos.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {entry.photos.map((photo) => (
+                    // eslint-disable-next-line @next/next/no-img-element -- Signed URLs sind kurzlebig, next/image-Optimierung/Caching lohnt hier nicht.
+                    <img
+                      key={photo.id}
+                      src={photo.url}
+                      alt={photo.caption ?? ""}
+                      className="h-20 w-20 rounded-md object-cover"
+                    />
+                  ))}
+                </div>
+              )}
+
+              <DiaryPhotoUpload tripId={id} entryId={entry.id} />
             </li>
           ))}
         </ul>

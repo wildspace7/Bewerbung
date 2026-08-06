@@ -217,6 +217,14 @@ export const demoPacking: Record<string, PackingItem[]> = {
   ],
 };
 
+// Platzhalter-"Fotos" als Inline-SVG statt echter Bilder — im Demo-Modus gibt
+// es kein Storage-Bucket, und ein externer Bild-Fetch wäre eine unnötige
+// Netzwerkabhängigkeit nur für Demozwecke.
+function svgPlaceholder(bg: string, emoji: string) {
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><rect width='200' height='200' fill='${bg}'/><text x='50%' y='53%' font-size='72' text-anchor='middle' dominant-baseline='middle'>${emoji}</text></svg>`;
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
+
 export const demoDiaryEntries: Record<string, DiaryEntry[]> = {
   "demo-lissabon": [
     {
@@ -225,6 +233,20 @@ export const demoDiaryEntries: Record<string, DiaryEntry[]> = {
       textContent:
         "Angekommen! Das Hotel in der Alfama hat einen Balkon mit Blick auf den Tejo. Abends im Time Out Market gegessen — die Warteschlange war es wert.",
       authorName: "Anna",
+      photos: [
+        {
+          id: "ph1",
+          url: svgPlaceholder("#F0865A", "🌅"),
+          caption: "Blick vom Balkon",
+          isFavorite: true,
+        },
+        {
+          id: "ph2",
+          url: svgPlaceholder("#3E93A6", "🍽️"),
+          caption: "Time Out Market",
+          isFavorite: false,
+        },
+      ],
     },
   ],
   "demo-dolomiten": [
@@ -234,6 +256,14 @@ export const demoDiaryEntries: Record<string, DiaryEntry[]> = {
       textContent:
         "Erste Nacht auf der Hütte. Die Wanderung morgen soll knackig werden, aber die Aussicht jetzt schon unbezahlbar.",
       authorName: "Tim",
+      photos: [
+        {
+          id: "ph3",
+          url: svgPlaceholder("#8B7FC9", "⛰️"),
+          caption: "Rifugio Lagazuoi",
+          isFavorite: false,
+        },
+      ],
     },
   ],
 };

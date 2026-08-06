@@ -407,6 +407,24 @@ Rundungsreste) — bislang ohne Test-Runner im Projekt. Wenn die Logik wächst
     Status-Labels. Einstellungen-Tab steht auf `ready: true` (Phase 2 laut
     Sitemap).
 
+15. Supabase Storage + Fotos im Tagebuch. Migration
+    `supabase/migrations/0003_storage.sql` legt ein **privates** Bucket
+    `trip-files` an (bewusst nicht public — anders als der Einladungslink, wo
+    die unratbare Trip-UUID selbst das Geheimnis ist, können
+    Tagebuchfotos/Dokumente sensiblere Inhalte sein). Pfadschema:
+    `{trip_id}/diary/{diary_entry_id}/{filename}` — das erste Pfadsegment ist
+    die Trip-UUID, geprüft über `is_trip_member()` in den
+    `storage.objects`-Policies. `diary_photos.photo_url` speichert nur den
+    Storage-*Pfad*; `src/lib/diary.ts` löst ihn serverseitig über
+    `createSignedUrls()` (gebündelt, nicht pro Foto einzeln, TTL 1h) zu einer
+    anzeigbaren URL auf — private Buckets brauchen das, `getPublicUrl()` würde
+    RLS umgehen. Upload läuft client-seitig direkt in den Browser
+    (`src/components/DiaryPhotoUpload.tsx`), `next/image` bewusst nicht
+    verwendet (Signed URLs sind kurzlebig, Remote-Pattern-Config lohnt nicht).
+    Foto-Löschen und Dokumente-Upload (gleiche Infrastruktur, anderer
+    Pfad-Präfix) sind die naheliegenden nächsten Schritte auf demselben Bucket.
+
 Noch offen (nicht Teil dieser Session, bewusst nicht gebaut): Onboarding,
-Fotos im Tagebuch (Supabase Storage), Entfernen anderer Teilnehmer:innen durch
-die Organisation und Dokumente-Upload (Phase 3).
+Foto-Löschen im Tagebuch, Entfernen anderer Teilnehmer:innen durch die
+Organisation und Dokumente-Upload (Phase 3, kann auf dem neuen `trip-files`-
+Bucket aufbauen).

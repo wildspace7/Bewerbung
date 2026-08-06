@@ -83,11 +83,20 @@ export interface PackingItem {
   isChecked: boolean;
 }
 
+export interface DiaryPhoto {
+  id: string;
+  /** Fertig aufgelöste Signed URL, keine Storage-Pfadangabe. */
+  url: string;
+  caption: string | null;
+  isFavorite: boolean;
+}
+
 export interface DiaryEntry {
   id: string;
   entryDate: string;
   textContent: string | null;
   authorName: string;
+  photos: DiaryPhoto[];
 }
 
 export interface TripDetail {
